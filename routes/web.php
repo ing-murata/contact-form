@@ -21,3 +21,5 @@ Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->
 Route::prefix('admin')->group(function () {
     Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('admin.contact.index');
 })->middleware('auth');
+
+Route::get('/contacts', [App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
