@@ -36,6 +36,9 @@
                             <li class="nav-item">
                                 <a class="btn btn-primary" href="{{ route('login') }}">ログイン</a>
                             </li>
+                            <li class="nav-item ms-2">
+                                <a class="btn btn-success" href="{{ route('register') }}">サインアップ</a>
+                            </li>
                         @endauth
                     </ul>
                 </div>
@@ -45,9 +48,7 @@
         <!-- ページのメインコンテンツ -->
         <main class="container py-4">
             @yield('content')
-
         </main>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
