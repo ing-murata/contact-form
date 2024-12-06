@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
+use App\Mail\InquiryNotification;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-    
+
     public function showContactForm()
     {
         // 問い合わせフォームを表示
@@ -26,12 +28,20 @@ class ContactController extends Controller
         $validated = $request->validated();
 
         // データベースに保存
-        Contact::create($validated);
+        $contact = Contact::create($validated);
+
+        try {
+            // 問い合わせ内容を管理者に送信
+            Mail::to('murata@in-g.jp')->send(new InquiryNotification($contact->toArray()));
+        } catch (\Exception $e) {
+            \Log::error('メール送信に失敗しました: ' . $e->getMessage());
+        }
 
         // 問い合わせ完了画面にリダイレクト
         return redirect()->route('contact.perfect')->with('status', 'お問い合わせが送信されました！');
-    }    
-    
+    }
+
+
     public function index()
     {
         // ページネーションを設定 (1ページに表示する件数を10件に設定)
